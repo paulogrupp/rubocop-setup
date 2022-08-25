@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  web:
+    build: .
+    command: bash -c "while [ true ]; do sleep 10; done"
+    volumes:
+      - .:/rubocop-setup
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - db
